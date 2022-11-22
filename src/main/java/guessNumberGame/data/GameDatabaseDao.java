@@ -49,14 +49,15 @@ public class GameDatabaseDao implements GameDao {
 
     @Override
     public List<Game> getAll() {
-        final String SQL = "SELECT game_id, answer, isFinished FROM Game";
+        final String SQL = "SELECT game_id, answer, isFinished FROM Game;";
         return jdbcTemplate.query(SQL, new GameMapper());
     }
 
 
     @Override
     public Game findById(int game_id) {
-        //implement
+        final String SQL = "SELECT game_id, answer, isFinished FROM Game WHERE game_id = ?;";
+        return jdbcTemplate.queryForObject(SQL, new GameMapper(), game_id);
     }
 
     @Override
@@ -67,7 +68,7 @@ public class GameDatabaseDao implements GameDao {
 
     @Override
     public boolean deleteById(int game_id) {
-        return jdbcTemplate.update("DELETE FROM Game WHERE id = ?", game_id) > 0;
+        return jdbcTemplate.update("DELETE FROM Game WHERE id = ?;", game_id) > 0;
     }
 
 
