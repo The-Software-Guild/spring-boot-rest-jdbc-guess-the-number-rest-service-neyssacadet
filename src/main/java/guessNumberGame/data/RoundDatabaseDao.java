@@ -58,12 +58,14 @@ public class RoundDatabaseDao implements RoundDao {
 
     @Override
     public List<Round> getAllOfGame(int game_id) {
-        //implement
+        final String SQL = "SELECT * FROM Round WHERE game_id = ? ORDER BY guess_time;";
+        return jdbcTemplate.query(SQL, new RoundDatabaseDao.RoundMapper(), game_id);
     }
 
     @Override
     public Round findById(int round_id) {
-        //implement
+        final String SQL = "SELECT * FROM Round WHERE round_id = ?;";
+        return jdbcTemplate.queryForObject(SQL, new RoundDatabaseDao.RoundMapper(), round_id);
     }
 
     @Override
