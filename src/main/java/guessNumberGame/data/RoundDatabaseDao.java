@@ -52,7 +52,8 @@ public class RoundDatabaseDao implements RoundDao {
 
     @Override
     public List<Round> getAll() {
-        //implement
+        final String SQL = "SELECT * FROM Round";
+        return jdbcTemplate.query(SQL, new RoundDatabaseDao.RoundMapper());
     }
 
     @Override
