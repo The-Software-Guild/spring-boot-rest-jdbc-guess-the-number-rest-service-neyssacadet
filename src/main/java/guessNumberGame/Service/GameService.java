@@ -94,7 +94,6 @@ public class GameService {
     public void setTimeStamp(Round round) {
         Calendar calendar = Calendar.getInstance();
         Timestamp guessTime = new Timestamp(calendar.getTime().getTime());
-
         round.setGuess_time(guessTime);
     }
 

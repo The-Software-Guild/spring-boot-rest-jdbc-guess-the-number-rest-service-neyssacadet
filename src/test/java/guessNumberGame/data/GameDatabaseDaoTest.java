@@ -87,7 +87,7 @@ public class GameDatabaseDaoTest extends TestCase {
         gameDao.add(game2);
 
         gameDao.deleteById(game1.getGame_id());
-        gameDao.deleteById(game2.getGame_id());
+        //gameDao.deleteById(game2.getGame_id());
 
         List<Game> games = gameDao.getAll();
         assertEquals(1, games.size());

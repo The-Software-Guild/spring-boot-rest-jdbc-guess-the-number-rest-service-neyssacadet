@@ -68,7 +68,8 @@ public class GameDatabaseDao implements GameDao {
 
     @Override
     public boolean deleteById(int game_id) {
-        return jdbcTemplate.update("DELETE FROM game WHERE id = ?", game_id) > 0;
+        final String SQL = "DELETE FROM game WHERE game_id = ?;";
+        return jdbcTemplate.update(SQL , game_id) > 0;
     }
 
 

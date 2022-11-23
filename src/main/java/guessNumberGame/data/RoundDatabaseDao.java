@@ -54,7 +54,7 @@ public class RoundDatabaseDao implements RoundDao {
     public List<Round> getAll() {
         //implement
         final String sql= "SELECT round_id, game_id, guess_time, guess, result"
-        + "FROM round";
+        + " FROM round";
         return jdbcTemplate.query(sql, new RoundMapper());
     }
 

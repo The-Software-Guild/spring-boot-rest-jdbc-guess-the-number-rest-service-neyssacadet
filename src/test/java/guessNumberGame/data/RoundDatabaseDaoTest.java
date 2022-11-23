@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static org.junit.Assert.assertNotEquals;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplicationConfiguration.class)
 public class RoundDatabaseDaoTest extends TestCase {
@@ -25,6 +27,10 @@ public class RoundDatabaseDaoTest extends TestCase {
 
     @Autowired
     GameDao gameDao;
+
+    @Autowired
+    GameService gameService;
+
     public RoundDatabaseDaoTest ()
     {
         
@@ -45,7 +51,6 @@ public class RoundDatabaseDaoTest extends TestCase {
 
     @Test
     public void testAdd() {
-        GameService gameService = new GameService();
         Game game = gameService.newGame();
         gameDao.add(game);
 
@@ -62,7 +67,6 @@ public class RoundDatabaseDaoTest extends TestCase {
 
     @Test
     public void testGetAll() {
-        GameService gameService = new GameService();
         Game game = gameService.newGame();
         gameDao.add(game);
 
@@ -87,7 +91,6 @@ public class RoundDatabaseDaoTest extends TestCase {
     @Test
     public void testGetAllOfGame() {
         // Declare and initialize GameService object
-        GameService gameService = new GameService();
 
         // Create and add 2 new games to the dao
         Game game = gameService.newGame();
@@ -124,5 +127,4 @@ public class RoundDatabaseDaoTest extends TestCase {
         assertFalse(rounds.contains(round3));
 
     }
-
-}
+    }
