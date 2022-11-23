@@ -30,12 +30,12 @@ public class GameDatabaseDaoTest extends TestCase {
     public void setUp() {
         List<Round> rounds = roundDao.getAll();
         for(Round round : rounds) {
-            roundDao.deleteById(round.getId());
+            roundDao.deleteById(round.getRound_id());
         }
 
         List<Game> games = gameDao.getAll();
         for(Game game : games) {
-            gameDao.deleteById(game.getGameId());
+            gameDao.deleteById(game.getGame_id());
         }
     }
 
@@ -47,13 +47,23 @@ public class GameDatabaseDaoTest extends TestCase {
         Game game = gameService.newGame();
         gameDao.add(game);
 
-        Game fromDao = gameDao.findById(game.getGameId());
-        assertEquals(game.getGameId(), fromDao.getGameId());
+        Game fromDao = gameDao.findById(game.getGame_id());
+        assertEquals(game.getGame_id(), fromDao.getGame_id());
     }
 
     @Test
     public void testGetAll() {
-        //implement
+        GameService gameService = new GameService();
+        Game game1 = gameService.newGame();
+        Game game2 = gameService.newGame();
+        gameDao.add(game1);
+        gameDao.add(game2);
+
+        List<Game> games = gameDao.getAll();
+
+        assertEquals(2, games.size());
+        assertTrue(games.contains(game1));
+        assertTrue(games.contains(game2));
     }
 
 
@@ -62,14 +72,25 @@ public class GameDatabaseDaoTest extends TestCase {
         GameService gameService = new GameService();
         Game game = gameService.newGame();
         gameDao.add(game);
-        game.setIsFinished(true);
+        game.setFinished(true);
         gameDao.update(game);
-        Game updated = gameDao.findById(game.getGameId());
-        assertTrue(updated.getIsFinished());
+        Game updated = gameDao.findById(game.getGame_id());
+        assertTrue(updated.isFinished());
     }
 
     @Test
     public void testDeleteById() {
-         //implement
+        GameService gameService = new GameService();
+        Game game1 = gameService.newGame();
+        Game game2 = gameService.newGame();
+        gameDao.add(game1);
+        gameDao.add(game2);
+
+        gameDao.deleteById(game1.getGame_id());
+        gameDao.deleteById(game2.getGame_id());
+
+        List<Game> games = gameDao.getAll();
+        assertEquals(1, games.size());
+
     }
 }
