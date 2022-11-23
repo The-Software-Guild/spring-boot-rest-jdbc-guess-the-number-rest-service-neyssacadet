@@ -11,28 +11,28 @@ public class Round {
     String guess;
     String result;
 
-    public int getId() {
+    public int getRound_id() {
         return round_id;
     }
 
-    public void setId(int round_id) {
+    public void setRound_id(int round_id) {
         this.round_id = round_id;
     }
 
-    public int getGameId() {
+    public int getGame_id() {
         return game_id;
     }
 
-    public void setGameId(int game_id) {
+    public void setGame_id(int game_id) {
         this.game_id = game_id;
     }
 
-    public Timestamp getTimeStamp() {
+    public Timestamp getGuess_time() {
         return guess_time;
     }
 
-    public void setTimeStamp(Timestamp timeStamp) {
-        this.guess_time = timeStamp;
+    public void setGuess_time(Timestamp guess_time) {
+        this.guess_time = guess_time;
     }
 
     public String getGuess() {
@@ -43,12 +43,12 @@ public class Round {
         this.guess = guess;
     }
 
-    public String getGuessResult() {
+    public String getResult() {
         return result;
     }
 
-    public void setGuessResult(String guessResult) {
-        this.result = guessResult;
+    public void setResult(String result) {
+        this.result = result;
     }
 
     @Override

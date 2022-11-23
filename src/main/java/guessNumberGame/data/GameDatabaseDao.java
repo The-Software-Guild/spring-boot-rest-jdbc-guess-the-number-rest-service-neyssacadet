@@ -27,7 +27,7 @@ public class GameDatabaseDao implements GameDao {
     @Override
     public Game add(Game game) {
 
-        final String sql = "INSERT INTO Game(answer, isFinished) VALUES(?,?);";
+        final String sql = "INSERT INTO Game(answer, isFinished) VALUES(?,?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update((Connection conn) -> {
@@ -37,38 +37,39 @@ public class GameDatabaseDao implements GameDao {
                     Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, game.getAnswer());
-            statement.setBoolean(2, game.getIsFinished());
+            statement.setBoolean(2, game.isFinished());
             return statement;
 
         }, keyHolder);
 
-        game.setGameId(keyHolder.getKey().intValue());
+        game.setGame_id(keyHolder.getKey().intValue());
 
         return game;
     }
 
     @Override
     public List<Game> getAll() {
-        final String SQL = "SELECT game_id, answer, isFinished FROM Game;";
+        final String SQL = "SELECT game_id, answer, isFinished FROM game";
         return jdbcTemplate.query(SQL, new GameMapper());
     }
 
 
     @Override
     public Game findById(int game_id) {
-        final String SQL = "SELECT game_id, answer, isFinished FROM Game WHERE game_id = ?;";
+        final String SQL = "SELECT game_id, answer, isFinished FROM game WHERE game_id = ?";
         return jdbcTemplate.queryForObject(SQL, new GameMapper(), game_id);
     }
 
     @Override
     public boolean update(Game game) {
-        final String SQL = "UPDATE Game SET answer = ?, isFinished = ? WHERE game_id = ?;";
-        return jdbcTemplate.update(SQL, game.getAnswer(), game.getIsFinished(), game.getGameId()) > 0;
+        final String SQL = "UPDATE game SET answer = ?, isFinished = ? WHERE game_id = ?";
+        return jdbcTemplate.update(SQL, game.getAnswer(), game.isFinished(), game.getGame_id()) > 0;
     }
 
     @Override
     public boolean deleteById(int game_id) {
-        return jdbcTemplate.update("DELETE FROM Game WHERE id = ?;", game_id) > 0;
+        final String SQL = "DELETE FROM game WHERE game_id = ?;";
+        return jdbcTemplate.update(SQL , game_id) > 0;
     }
 
 
@@ -79,9 +80,9 @@ public class GameDatabaseDao implements GameDao {
         public Game mapRow(ResultSet rs, int index) throws SQLException {
             Game game = new Game();
             //game only has 3 variables
-            game.setGameId(rs.getInt("game_id"));
+            game.setGame_id(rs.getInt("game_id"));
             game.setAnswer(rs.getString("answer"));
-            game.setIsFinished(rs.getBoolean("isFinished"));
+            game.setFinished(rs.getBoolean("isFinished"));
             return game;
         }
     }

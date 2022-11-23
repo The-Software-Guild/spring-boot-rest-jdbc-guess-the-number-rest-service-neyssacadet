@@ -15,11 +15,11 @@ public class GameInMemoryDao implements GameDao {
     public Game add(Game game) {
 
         int nextId = games.stream()
-                .mapToInt(Game::getGameId)
+                .mapToInt(Game::getGame_id)
                 .max()
                 .orElse(0) + 1;
 
-        game.setGameId(nextId);
+        game.setGame_id(nextId);
         games.add(game);
         return game;
     }
@@ -32,7 +32,7 @@ public class GameInMemoryDao implements GameDao {
     @Override
     public Game findById(int id) {
         return games.stream()
-                .filter(i -> i.getGameId() == id)
+                .filter(i -> i.getGame_id() == id)
                 .findFirst()
                 .orElse(null);
     }
@@ -42,7 +42,7 @@ public class GameInMemoryDao implements GameDao {
 
         int index = 0;
         while (index < games.size()
-                && games.get(index).getGameId() != game.getGameId()) {
+                && games.get(index).getGame_id() != game.getGame_id()) {
             index++;
         }
 
@@ -54,7 +54,7 @@ public class GameInMemoryDao implements GameDao {
 
     @Override
     public boolean deleteById(int id) {
-        return games.removeIf(i -> i.getGameId() == id);
+        return games.removeIf(i -> i.getGame_id() == id);
     }
 
 }

@@ -46,7 +46,7 @@ public class GameController {
     @ResponseStatus(HttpStatus.CREATED)
     //marks a method or exception class with the status code and reason message that should be returned.
     public Round guessNumber(@RequestBody Round body) {
-        Game game = gameDao.findById(body.getGameId());
+        Game game = gameDao.findById(body.getGame_id());
         GameService gameService = new GameService();
         Round round = gameService.guessNumber(game, body.getGuess(), gameDao);
         return roundDao.add(round);
@@ -68,9 +68,8 @@ public class GameController {
         return gameService.getGames(game);
     }
 
-    @GetMapping("rounds/{gameId}")
+    @GetMapping("rounds/{game_id}")
     public List<Round> getGameRounds(@PathVariable int game_id) {
         return roundDao.getAllOfGame(game_id);
     }
-
 }

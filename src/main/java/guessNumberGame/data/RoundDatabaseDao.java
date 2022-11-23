@@ -27,8 +27,8 @@ public class RoundDatabaseDao implements RoundDao {
     @Override
     public Round add(Round round) {
 
-        final String sql = "INSERT INTO Round(game_id, guess_time, guess, result)" +
-                " VALUES(?,?,?,?);";
+        final String sql = "INSERT INTO guessGame.round(game_id, guess_time, guess, result)"
+                + " VALUES(?,?,?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update((Connection conn) -> {
@@ -37,35 +37,40 @@ public class RoundDatabaseDao implements RoundDao {
                     sql,
                     Statement.RETURN_GENERATED_KEYS);
 
-            statement.setInt(1, round.getGameId());
-            statement.setTimestamp(2, round.getTimeStamp());
+            statement.setInt(1, round.getGame_id());
+            statement.setTimestamp(2, round.getGuess_time());
             statement.setString(3, round.getGuess());
-            statement.setString(4, round.getGuessResult());
+            statement.setString(4, round.getResult());
             return statement;
 
         }, keyHolder);
 
-        round.setId(keyHolder.getKey().intValue());
+        round.setRound_id(keyHolder.getKey().intValue());
 
         return round;
     }
 
     @Override
     public List<Round> getAll() {
-        final String SQL = "SELECT * FROM Round";
-        return jdbcTemplate.query(SQL, new RoundDatabaseDao.RoundMapper());
+        //implement
+        final String sql= "SELECT round_id, game_id, guess_time, guess, result"
+        + " FROM round";
+        return jdbcTemplate.query(sql, new RoundMapper());
     }
 
     @Override
     public List<Round> getAllOfGame(int game_id) {
-        final String SQL = "SELECT * FROM Round WHERE game_id = ? ORDER BY guess_time;";
-        return jdbcTemplate.query(SQL, new RoundDatabaseDao.RoundMapper(), game_id);
+        //implement
+        final String sql="SELECT * FROM guessGame.round WHERE game_id = ?";
+        return jdbcTemplate.query(sql, new RoundMapper(),game_id);
     }
 
     @Override
     public Round findById(int round_id) {
-        final String SQL = "SELECT * FROM Round WHERE round_id = ?;";
-        return jdbcTemplate.queryForObject(SQL, new RoundDatabaseDao.RoundMapper(), round_id);
+        //implement }
+        final String sql="SELECT round_id,game_id,guess_time, guess, result "
+                + " FROM guessGame.round WHERE round_id=?";
+        return jdbcTemplate.queryForObject(sql, new RoundMapper(), round_id);
     }
 
     @Override
@@ -75,7 +80,7 @@ public class RoundDatabaseDao implements RoundDao {
 
     @Override
     public boolean deleteById(int round_id) {
-        return jdbcTemplate.update("DELETE FROM Round WHERE id = ?", round_id) > 0;
+        return jdbcTemplate.update("DELETE FROM round WHERE round_id = ?", round_id) > 0;
     }
 
 
@@ -85,11 +90,11 @@ public class RoundDatabaseDao implements RoundDao {
         public Round mapRow(ResultSet rs, int index) throws SQLException {
             Round round = new Round();
             //round has 5 private variables therefore:
-            round.setId(rs.getInt("round_id"));
-            round.setGameId(rs.getInt("game_id"));
-            round.setTimeStamp(rs.getTimestamp("guess_time"));
+            round.setRound_id(rs.getInt("round_id"));
+            round.setGame_id(rs.getInt("game_id"));
+            round.setGuess_time(rs.getTimestamp("guess_time"));
             round.setGuess(rs.getString("guess"));
-            round.setGuessResult(rs.getString("result"));
+            round.setResult(rs.getString("result"));
             return round;
         }
     }
